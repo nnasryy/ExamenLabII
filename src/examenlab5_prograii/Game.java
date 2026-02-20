@@ -67,12 +67,8 @@ public class Game extends RentItem implements MenuActions{
     }
     
     @Override
-    public void submenu(){
-        String opciones = "1. Actualizar Fecha de Publicacion\n"+
-                          "2. Agregar Especificacion\n"+
-                          "3. Ver Especificacones\n"+
-                          "4. Salir";
-        JOptionPane.showMessageDialog(null,opciones,"SubMenu Game",JOptionPane.INFORMATION_MESSAGE);
+    public void submenu() {
+        new Submenu(this);  
     }
     
     @Override
