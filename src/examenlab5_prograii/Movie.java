@@ -10,15 +10,18 @@ import javax.swing.ImageIcon;
 /**
  *
  * @author nasry
- */
+ */import javax.swing.*;
+import java.util.Calendar;
+
 public class Movie extends RentItem {
 
     private Calendar fechaEstreno;
 
-    public Movie(int codigo, String nombre, double precioRenta, ImageIcon imagen) {
+    public Movie(int codigo, String nombre, double precioRenta, int cantidadCopias, String rutaImagen) {
         super(codigo, nombre, precioRenta);
-        this.fechaEstreno = Calendar.getInstance();
-        this.imagen = imagen;
+        this.cantidadCopias = cantidadCopias;         
+        this.imagen = new ImageIcon(rutaImagen);         
+        this.fechaEstreno = Calendar.getInstance();      
     }
 
     public Calendar getFechaEstreno() {
@@ -33,13 +36,10 @@ public class Movie extends RentItem {
         Calendar actual = Calendar.getInstance();
         long diffMillis = actual.getTimeInMillis() - fechaEstreno.getTimeInMillis();
         long diffMeses = diffMillis / (1000L * 60 * 60 * 24 * 30);
-        if (diffMeses <= 3) {
-            return "ESTRENO";
-        } else {
-            return "NORMAL";
-        }
+        return (diffMeses <= 3) ? "ESTRENO" : "NORMAL";
     }
 
+    @Override
     public double pagoRenta(int dias) {
         double total = precioRenta * dias;
         String estado = getEstado();
@@ -51,8 +51,8 @@ public class Movie extends RentItem {
         return total;
     }
 
-    public String toString(){
-    return super.toString() + "| Estado: " + getEstado()+"-Movie: ";
+    @Override
+    public String toString() {
+        return super.toString() + "| Estado: " + getEstado() + " - Movie";
     }
-    
 }

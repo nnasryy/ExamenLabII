@@ -17,11 +17,12 @@ public class Game extends RentItem implements MenuActions{
     private Calendar fechaPublicacion;
     private ArrayList<String> especificaciones;
     
-    public Game(int codigo, String nombre, ImageIcon imagen){
-        super(codigo, nombre, 20.0);
-        this.fechaPublicacion = Calendar.getInstance();
+    public Game(int codigo, String nombre, double precio, int cantidadCopias, String rutaImagen) {
+        super(codigo, nombre, precio);
+        this.cantidadCopias = cantidadCopias;          
+        this.imagen = new ImageIcon(rutaImagen);      
+        this.fechaPublicacion = Calendar.getInstance(); 
         this.especificaciones = new ArrayList<>();
-        this.imagen = imagen;
     }
     
     public void setFechaPublicacion(int year, int mes, int dia){
