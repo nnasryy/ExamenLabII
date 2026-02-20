@@ -8,6 +8,9 @@ package examenlab5_prograii;
  *
  * @author hermi
  */
-public class MenuActions {
+public interface MenuActions {
+    
+    void submenu();
+    void ejecutarOpcion(int opcion);
     
 }
