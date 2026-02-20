@@ -52,18 +52,15 @@ public class RentarItemGUI extends JFrame {
     }
     
     private void inicializarComponentes() {
-        // Panel superior - Búsqueda
         JPanel panelBusqueda = crearPanelBusqueda();
         add(panelBusqueda, BorderLayout.NORTH);
         
-        // Panel central - Información del ítem
         panelInfo = new JPanel();
         panelInfo.setLayout(new BorderLayout());
         panelInfo.setBorder(BorderFactory.createTitledBorder("Información del Ítem"));
         panelInfo.setPreferredSize(new Dimension(580, 300));
         add(panelInfo, BorderLayout.CENTER);
         
-        // Panel inferior - Acciones
         JPanel panelAcciones = crearPanelAcciones();
         add(panelAcciones, BorderLayout.SOUTH);
     }
@@ -86,7 +83,6 @@ public class RentarItemGUI extends JFrame {
         btnBuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBuscar.addActionListener(e -> buscarItem());
         
-        // Enter en el campo de texto también busca
         txtCodigo.addActionListener(e -> buscarItem());
         
         panel.add(lblCodigo);
@@ -125,16 +121,14 @@ public class RentarItemGUI extends JFrame {
     }
     
     private void buscarItem() {
-        // Validar que hay ítems
         if (items.isEmpty()) {
-            BaseGUI.mostrarAdvertencia(this, "No hay ítems registrados en el sistema.");
+            BaseGUI.mostrarAdvertencia(this, "No hay items registrados en el sistema.");
             return;
         }
         
-        // Validar entrada
         String codigoStr = txtCodigo.getText().trim();
         if (codigoStr.isEmpty()) {
-            BaseGUI.mostrarError(this, "Por favor ingrese un código.");
+            BaseGUI.mostrarError(this, "Por favor ingrese un codigo.");
             txtCodigo.requestFocus();
             return;
         }
@@ -151,7 +145,7 @@ public class RentarItemGUI extends JFrame {
             }
             
         } catch (NumberFormatException e) {
-            BaseGUI.mostrarError(this, "El código debe ser un número válido.");
+            BaseGUI.mostrarError(this, "El codigo debe ser un numero valido.");
             txtCodigo.requestFocus();
         }
     }
@@ -163,7 +157,6 @@ public class RentarItemGUI extends JFrame {
         contenedor.setBackground(Color.WHITE);
         contenedor.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         
-        // Imagen a la izquierda
         if (itemEncontrado.getImagen() != null) {
             JLabel lblImagen = new JLabel();
             ImageIcon icon = itemEncontrado.getImagen();
@@ -173,19 +166,16 @@ public class RentarItemGUI extends JFrame {
             contenedor.add(lblImagen, BorderLayout.WEST);
         }
         
-        // Información a la derecha
         JPanel panelDatos = new JPanel();
         panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
         panelDatos.setBackground(Color.WHITE);
         panelDatos.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
         
-        // Nombre
         JLabel lblNombre = new JLabel("Nombre: " + itemEncontrado.getNombre());
         lblNombre.setFont(new Font("Arial", Font.BOLD, 18));
         panelDatos.add(lblNombre);
         panelDatos.add(Box.createRigidArea(new Dimension(0, 15)));
         
-        // Estado (solo para películas)
         if (itemEncontrado instanceof Movie) {
             Movie movie = (Movie) itemEncontrado;
             JLabel lblEstado = new JLabel("Estado: " + movie.getEstado());
@@ -196,21 +186,21 @@ public class RentarItemGUI extends JFrame {
             panelDatos.add(Box.createRigidArea(new Dimension(0, 10)));
         }
         
-        // Precio
+
         JLabel lblPrecio = new JLabel("Precio Base: Lps. " + 
             String.format("%.2f", itemEncontrado.getPrecioRenta()));
         lblPrecio.setFont(new Font("Arial", Font.PLAIN, 16));
         panelDatos.add(lblPrecio);
         panelDatos.add(Box.createRigidArea(new Dimension(0, 10)));
         
-        // Código
+
         JLabel lblCodigo = new JLabel("Código: " + itemEncontrado.getCodigo());
         lblCodigo.setFont(new Font("Arial", Font.PLAIN, 14));
         lblCodigo.setForeground(Color.GRAY);
         panelDatos.add(lblCodigo);
         panelDatos.add(Box.createRigidArea(new Dimension(0, 10)));
         
-        // Tipo
+
         String tipo = itemEncontrado instanceof Movie ? "Película" : "Videojuego";
         JLabel lblTipo = new JLabel("Tipo: " + tipo);
         lblTipo.setFont(new Font("Arial", Font.ITALIC, 14));
@@ -231,7 +221,6 @@ public class RentarItemGUI extends JFrame {
             return;
         }
         
-        // Solicitar cantidad de días
         Integer dias = BaseGUI.solicitarEntero(this, 
             "Ingrese la cantidad de días de renta:");
         
@@ -239,22 +228,21 @@ public class RentarItemGUI extends JFrame {
         
         if (dias <= 0) {
             BaseGUI.mostrarError(this, 
-                "La cantidad de días debe ser mayor a 0.");
+                "La cantidad de dias debe ser mayor a 0.");
             return;
         }
         
-        // Calcular monto total
+
         double total = itemEncontrado.pagoRenta(dias);
         
-        // Crear panel con detalles de la renta
         JPanel panelResumen = new JPanel();
         panelResumen.setLayout(new BoxLayout(panelResumen, BoxLayout.Y_AXIS));
         panelResumen.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
-        JLabel lblItem = new JLabel("Ítem: " + itemEncontrado.getNombre());
+        JLabel lblItem = new JLabel("Item: " + itemEncontrado.getNombre());
         lblItem.setFont(new Font("Arial", Font.BOLD, 14));
         
-        JLabel lblDias = new JLabel("Días de renta: " + dias);
+        JLabel lblDias = new JLabel("Dias de renta: " + dias);
         lblDias.setFont(new Font("Arial", Font.PLAIN, 14));
         
         JLabel lblTotal = new JLabel("TOTAL A PAGAR: Lps. " + 
@@ -273,7 +261,6 @@ public class RentarItemGUI extends JFrame {
             "Resumen de Renta", 
             JOptionPane.INFORMATION_MESSAGE);
         
-        // Limpiar formulario para otra renta
         limpiarFormulario();
     }
     

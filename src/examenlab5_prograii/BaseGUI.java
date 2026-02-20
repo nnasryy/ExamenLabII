@@ -50,7 +50,6 @@ public class BaseGUI {
         tarjeta.setBackground(Color.WHITE);
         tarjeta.setMaximumSize(new Dimension(850, 200));
         
-        // Imagen
         if (item.getImagen() != null) {
             JLabel lblImagen = new JLabel();
             ImageIcon icon = item.getImagen();
@@ -59,7 +58,6 @@ public class BaseGUI {
             tarjeta.add(lblImagen, BorderLayout.WEST);
         }
         
-        // info
         JPanel panelInfo = crearPanelInfo(item);
         tarjeta.add(panelInfo, BorderLayout.CENTER);
         
@@ -76,7 +74,6 @@ public class BaseGUI {
         panelInfo.add(lblNombre);
         panelInfo.add(Box.createRigidArea(new Dimension(0, 5)));
         
-        // Descomentar para mostrar estado en películas
         if (item instanceof Movie) {
             Movie movie = (Movie) item;
             JLabel lblEstado = new JLabel("Estado: " + movie.getEstado());
@@ -139,7 +136,7 @@ public class BaseGUI {
             if (input == null) return null;
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            mostrarError(parent, "Error: Ingrese un número válido.");
+            mostrarError(parent, "Error: Ingrese un número valido.");
             return null;
         }
     }
@@ -150,7 +147,7 @@ public class BaseGUI {
             if (input == null) return null;
             return Double.parseDouble(input);
         } catch (NumberFormatException e) {
-            mostrarError(parent, "Error: Ingrese un número válido.");
+            mostrarError(parent, "Error: Ingrese un número valido.");
             return null;
         }
     }

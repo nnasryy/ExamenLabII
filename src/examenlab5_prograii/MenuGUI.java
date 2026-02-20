@@ -39,7 +39,6 @@ public class MenuGUI extends JFrame {
         gbc.insets = new Insets(15, 15, 15, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Título principal
         JLabel titulo = new JLabel("Sistema de Renta Multimedia", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 32));
         titulo.setForeground(new Color(33, 150, 243));
@@ -48,18 +47,15 @@ public class MenuGUI extends JFrame {
         gbc.gridwidth = 1;
         mainPanel.add(titulo, gbc);
 
-        // Subtítulo
         JLabel subtitulo = new JLabel("Gestión de Movies y Games", SwingConstants.CENTER);
         subtitulo.setFont(new Font("Arial", Font.ITALIC, 16));
         subtitulo.setForeground(new Color(100, 100, 100));
         gbc.gridy = 1;
         mainPanel.add(subtitulo, gbc);
 
-        // Espacio
         gbc.gridy = 2;
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)), gbc);
 
-        // Botones del menú
         gbc.gridy = 3;
         JButton btnAgregar = crearBotonMenu("Agregar Ítem", new Color(76, 175, 80));
         btnAgregar.addActionListener(e -> abrirAgregarItem());
@@ -99,7 +95,6 @@ public class MenuGUI extends JFrame {
         btn.setBorderPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        // Efecto hover
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn.setBackground(color.brighter());
@@ -146,46 +141,55 @@ public class MenuGUI extends JFrame {
             menuItem.submenu();
         } else {
             BaseGUI.mostrarAdvertencia(this, 
-                "Este ítem no tiene submenú disponible.\n" +
-                "Solo los videojuegos (Game) tienen submenú.");
+                "Este item no tiene submenú disponible.\n" +
+                "Solo los videojuegos (Game) tienen submenu.");
         }
     }
 
     private void imprimirTodo() {
-        if (items.isEmpty()) {
-            BaseGUI.mostrarAdvertencia(this, "No hay ítems registrados en el sistema.");
-            return;
-        }
-        
-        JDialog dialogo = new JDialog(this, "Lista de Ítems", true);
-        dialogo.setSize(950, 750);
-        dialogo.setLocationRelativeTo(this);
-        
-        JPanel contenedor = new JPanel();
-        contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
-        contenedor.setBackground(new Color(245, 245, 245));
-        contenedor.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        
-        // Encabezado
-        JLabel encabezado = new JLabel("Total de ítems: " + items.size(), SwingConstants.CENTER);
-        encabezado.setFont(new Font("Arial", Font.BOLD, 18));
-        encabezado.setForeground(new Color(33, 150, 243));
-        contenedor.add(encabezado);
+    if (items.isEmpty()) {
+        BaseGUI.mostrarAdvertencia(this, "No hay ítems registrados en el sistema.");
+        return;
+    }
+    
+    JDialog dialogo = new JDialog(this, "Lista de Ítems", true);
+    dialogo.setSize(950, 750);
+    dialogo.setLocationRelativeTo(this);
+    dialogo.setLayout(new BorderLayout(10, 10));
+
+    JPanel contenedor = new JPanel();
+    contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
+    contenedor.setBackground(new Color(245, 245, 245));
+    contenedor.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+    // Encabezado
+    JLabel encabezado = new JLabel("Total de ítems: " + items.size(), SwingConstants.CENTER);
+    encabezado.setFont(new Font("Arial", Font.BOLD, 18));
+    encabezado.setForeground(new Color(33, 150, 243));
+    contenedor.add(encabezado);
+    contenedor.add(Box.createRigidArea(new Dimension(0, 15)));
+
+    // Tarjetas de ítems
+    for (RentItem item : items) {
+        JPanel tarjeta = crearTarjetaMejorada(item);
+        contenedor.add(tarjeta);
         contenedor.add(Box.createRigidArea(new Dimension(0, 15)));
-        
-        // Tarjetas de ítems
-        for (RentItem item : items) {
-            JPanel tarjeta = crearTarjetaMejorada(item);
-            contenedor.add(tarjeta);
-            contenedor.add(Box.createRigidArea(new Dimension(0, 15)));
-        }
-        
-        JScrollPane scrollPane = new JScrollPane(contenedor);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        
-        dialogo.add(scrollPane);
-        dialogo.setVisible(true);
+    }
+
+    JScrollPane scrollPane = new JScrollPane(contenedor);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+    dialogo.add(scrollPane, BorderLayout.CENTER);
+
+    // Panel inferior con botón salir
+    JPanel panelBotonSalir = new JPanel();
+    panelBotonSalir.setBackground(new Color(245, 245, 245));
+    JButton btnSalir = BaseGUI.crearBoton("Salir", new Color(244, 67, 54));
+    btnSalir.addActionListener(e -> dialogo.dispose());
+    panelBotonSalir.add(btnSalir);
+    dialogo.add(panelBotonSalir, BorderLayout.SOUTH);
+
+    dialogo.setVisible(true);
     }
 
     private JPanel crearTarjetaMejorada(RentItem item) {
@@ -197,7 +201,6 @@ public class MenuGUI extends JFrame {
         tarjeta.setBackground(Color.WHITE);
         tarjeta.setMaximumSize(new Dimension(900, 220));
         
-        // Imagen
         if (item.getImagen() != null) {
             JLabel lblImagen = new JLabel();
             ImageIcon icon = item.getImagen();
@@ -207,18 +210,16 @@ public class MenuGUI extends JFrame {
             tarjeta.add(lblImagen, BorderLayout.WEST);
         }
         
-        // Información
         JPanel panelInfo = new JPanel();
         panelInfo.setLayout(new BoxLayout(panelInfo, BoxLayout.Y_AXIS));
         panelInfo.setBackground(Color.WHITE);
         
-        JLabel lblNombre = new JLabel("📌 " + item.getNombre());
+        JLabel lblNombre = new JLabel("" + item.getNombre());
         lblNombre.setFont(new Font("Arial", Font.BOLD, 20));
         lblNombre.setForeground(new Color(33, 150, 243));
         panelInfo.add(lblNombre);
         panelInfo.add(Box.createRigidArea(new Dimension(0, 10)));
         
-        // Estado para películas
         if (item instanceof Movie) {
             Movie movie = (Movie) item;
             JLabel lblEstado = new JLabel("Estado: " + movie.getEstado());
@@ -235,7 +236,7 @@ public class MenuGUI extends JFrame {
         panelInfo.add(lblPrecio);
         panelInfo.add(Box.createRigidArea(new Dimension(0, 8)));
         
-        JLabel lblCodigo = new JLabel("Código: " + item.getCodigo());
+        JLabel lblCodigo = new JLabel("Codigo: " + item.getCodigo());
         lblCodigo.setFont(new Font("Arial", Font.PLAIN, 14));
         lblCodigo.setForeground(Color.GRAY);
         panelInfo.add(lblCodigo);
@@ -254,7 +255,7 @@ public class MenuGUI extends JFrame {
 
     private void salir() {
         int opcion = JOptionPane.showConfirmDialog(this,
-            "¿Está seguro que desea salir del sistema?",
+            "Esta seguro que desea salir del sistema?",
             "Confirmar Salida",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE);

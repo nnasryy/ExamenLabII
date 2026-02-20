@@ -31,7 +31,7 @@ public class AgregarItem extends JFrame {
     }
 
     private void configurarVentana() {
-        setTitle("Agregar Nuevo Ítem");
+        setTitle("Agregar Nuevo Item");
         setSize(700, 650);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(15, 15));
@@ -40,7 +40,6 @@ public class AgregarItem extends JFrame {
     }
 
     private void crearComponentes() {
-        // Panel principal con padding
         JPanel panelPrincipal = new JPanel(new GridBagLayout());
         panelPrincipal.setBackground(Color.WHITE);
         panelPrincipal.setBorder(BorderFactory.createCompoundBorder(
@@ -52,7 +51,6 @@ public class AgregarItem extends JFrame {
         gbc.insets = new Insets(12, 12, 12, 12);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Título
         JLabel titulo = new JLabel("Agregar Nuevo Ítem", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 26));
         titulo.setForeground(new Color(33, 150, 243));
@@ -60,7 +58,6 @@ public class AgregarItem extends JFrame {
         panelPrincipal.add(titulo, gbc);
         gbc.gridwidth = 1;
 
-        // Tipo de ítem
         gbc.gridy = 1; gbc.gridx = 0;
         JLabel lblTipo = crearEtiqueta("Tipo de Ítem:");
         panelPrincipal.add(lblTipo, gbc);
@@ -71,7 +68,6 @@ public class AgregarItem extends JFrame {
         comboTipo.setPreferredSize(new Dimension(250, 35));
         panelPrincipal.add(comboTipo, gbc);
 
-        // Código
         gbc.gridy = 2; gbc.gridx = 0;
         panelPrincipal.add(crearEtiqueta("Código:"), gbc);
 
@@ -79,7 +75,6 @@ public class AgregarItem extends JFrame {
         txtCodigo = crearCampoTexto();
         panelPrincipal.add(txtCodigo, gbc);
 
-        // Nombre
         gbc.gridy = 3; gbc.gridx = 0;
         panelPrincipal.add(crearEtiqueta("Nombre:"), gbc);
 
@@ -87,7 +82,6 @@ public class AgregarItem extends JFrame {
         txtNombre = crearCampoTexto();
         panelPrincipal.add(txtNombre, gbc);
 
-        // Precio
         gbc.gridy = 4; gbc.gridx = 0;
         panelPrincipal.add(crearEtiqueta("Precio Base (Lps):"), gbc);
 
@@ -95,7 +89,6 @@ public class AgregarItem extends JFrame {
         txtPrecio = crearCampoTexto();
         panelPrincipal.add(txtPrecio, gbc);
 
-        // Copias
         gbc.gridy = 5; gbc.gridx = 0;
         panelPrincipal.add(crearEtiqueta("Cantidad de Copias:"), gbc);
 
@@ -103,7 +96,6 @@ public class AgregarItem extends JFrame {
         txtCopias = crearCampoTexto();
         panelPrincipal.add(txtCopias, gbc);
 
-        // Botón seleccionar imagen
         gbc.gridy = 6; gbc.gridx = 0; gbc.gridwidth = 2;
         JButton btnSeleccionar = new JButton("Seleccionar Imagen");
         btnSeleccionar.setFont(new Font("Arial", Font.BOLD, 14));
@@ -115,7 +107,6 @@ public class AgregarItem extends JFrame {
         btnSeleccionar.addActionListener(e -> seleccionarImagen());
         panelPrincipal.add(btnSeleccionar, gbc);
 
-        // Vista previa de imagen
         gbc.gridy = 7; gbc.gridx = 0; gbc.gridwidth = 2;
         lblImagen = new JLabel("Sin imagen seleccionada", SwingConstants.CENTER);
         lblImagen.setPreferredSize(new Dimension(250, 250));
@@ -129,11 +120,10 @@ public class AgregarItem extends JFrame {
 
         add(panelPrincipal, BorderLayout.CENTER);
 
-        // Panel de botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
         panelBotones.setBackground(new Color(245, 245, 245));
 
-        JButton btnGuardar = crearBotonAccion("💾 Guardar", new Color(76, 175, 80));
+        JButton btnGuardar = crearBotonAccion("Guardar", new Color(76, 175, 80));
         btnGuardar.addActionListener(e -> guardarItem());
         panelBotones.add(btnGuardar);
 
@@ -183,7 +173,7 @@ public class AgregarItem extends JFrame {
         }
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Imágenes (*.jpg, *.jpeg, *.png, *.gif)", "jpg", "jpeg", "png", "gif");
+            "Imagenes (*.jpg, *.jpeg, *.png, *.gif)", "jpg", "jpeg", "png", "gif");
         fileChooser.setFileFilter(filter);
 
         int result = fileChooser.showOpenDialog(this);
@@ -200,7 +190,6 @@ public class AgregarItem extends JFrame {
 
     private void guardarItem() {
         try {
-            // Validaciones
             if (txtCodigo.getText().trim().isEmpty() ||
                 txtNombre.getText().trim().isEmpty() ||
                 txtPrecio.getText().trim().isEmpty() ||
@@ -214,7 +203,6 @@ public class AgregarItem extends JFrame {
             double precio = Double.parseDouble(txtPrecio.getText().trim());
             int copias = Integer.parseInt(txtCopias.getText().trim());
 
-            // Validar código único
             for (RentItem item : items) {
                 if (item.getCodigo() == codigo) {
                     BaseGUI.mostrarError(this, "El código ya existe. Use otro código.");
@@ -237,12 +225,10 @@ public class AgregarItem extends JFrame {
                 return;
             }
 
-            // Crear el ítem según el tipo
             String tipo = (String) comboTipo.getSelectedItem();
             if (tipo.equals("Movie")) {
                 Movie movie = new Movie(codigo, nombre, precio, copias, rutaImagen);
                 
-                // Preguntar por fecha de estreno
                 int opcion = JOptionPane.showConfirmDialog(this,
                     "¿Desea establecer una fecha de estreno personalizada?",
                     "Fecha de Estreno",
@@ -290,7 +276,7 @@ public class AgregarItem extends JFrame {
                     fecha.set(Calendar.DAY_OF_MONTH, dia);
                     movie.setFechaEstreno(fecha);
                 } else {
-                    BaseGUI.mostrarAdvertencia(this, "Fecha inválida. Se usará la fecha actual.");
+                    BaseGUI.mostrarAdvertencia(this, "Fecha invalida. Se usará la fecha actual.");
                 }
             }
         } catch (Exception e) {
