@@ -24,7 +24,7 @@ public class MenuGUI extends JFrame {
     }
 
     private void configurarVentana() {
-        setTitle("Sistema de Renta Multimedia");
+        setTitle("RENTA MULTIMEDIA");
         setSize(900, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -34,22 +34,22 @@ public class MenuGUI extends JFrame {
 
     private void crearMenu() {
         mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(240, 245, 250));
+        mainPanel.setBackground(new Color(250, 240, 240));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15, 15, 15, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel titulo = new JLabel("Sistema de Renta Multimedia", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("RENTA MULTIMEDIA", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 32));
-        titulo.setForeground(new Color(33, 150, 243));
+        titulo.setForeground(new Color(178, 34, 34)); 
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
         mainPanel.add(titulo, gbc);
 
-        JLabel subtitulo = new JLabel("Gestión de Movies y Games", SwingConstants.CENTER);
+        JLabel subtitulo = new JLabel("D: Gestion de Movies y Games :D", SwingConstants.CENTER);
         subtitulo.setFont(new Font("Arial", Font.ITALIC, 16));
-        subtitulo.setForeground(new Color(100, 100, 100));
+        subtitulo.setForeground(new Color(220, 20, 60));
         gbc.gridy = 1;
         mainPanel.add(subtitulo, gbc);
 
@@ -57,33 +57,33 @@ public class MenuGUI extends JFrame {
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)), gbc);
 
         gbc.gridy = 3;
-        JButton btnAgregar = crearBotonMenu("Agregar Ítem", new Color(76, 175, 80));
+        JButton btnAgregar = crearBotonMenu("Agregar Item", new Color(220, 20, 60));
         btnAgregar.addActionListener(e -> abrirAgregarItem());
         mainPanel.add(btnAgregar, gbc);
 
         gbc.gridy = 4;
-        JButton btnRentar = crearBotonMenu("Rentar", new Color(33, 150, 243));
+        JButton btnRentar = crearBotonMenu("Rentar", new Color(178, 34, 34));
         btnRentar.addActionListener(e -> abrirRentar());
         mainPanel.add(btnRentar, gbc);
 
         gbc.gridy = 5;
-        JButton btnSubmenu = crearBotonMenu("Ejecutar Submenú", new Color(255, 152, 0));
+        JButton btnSubmenu = crearBotonMenu("Ejecutar Submenu", new Color(205, 92, 92));
         btnSubmenu.addActionListener(e -> ejecutarSubmenu());
         mainPanel.add(btnSubmenu, gbc);
 
         gbc.gridy = 6;
-        JButton btnImprimir = crearBotonMenu("Imprimir Todo", new Color(156, 39, 176));
+        JButton btnImprimir = crearBotonMenu("Imprimir Todo", new Color(220, 20, 60));
         btnImprimir.addActionListener(e -> imprimirTodo());
         mainPanel.add(btnImprimir, gbc);
 
         gbc.gridy = 7;
-        JButton btnSalir = crearBotonMenu("Salir", new Color(244, 67, 54));
+        JButton btnSalir = crearBotonMenu("Salir", new Color(139, 0, 0));
         btnSalir.addActionListener(e -> salir());
         mainPanel.add(btnSalir, gbc);
 
         add(mainPanel, BorderLayout.CENTER);
-        
     }
+
 
     private JButton crearBotonMenu(String texto, Color color) {
         JButton btn = new JButton(texto);
@@ -142,7 +142,7 @@ public class MenuGUI extends JFrame {
         } else {
             BaseGUI.mostrarAdvertencia(this, 
                 "Este item no tiene submenú disponible.\n" +
-                "Solo los videojuegos (Game) tienen submenu.");
+                "Solo los videojuegos (Game) tienen submenu :c.");
         }
     }
 
@@ -162,14 +162,12 @@ public class MenuGUI extends JFrame {
     contenedor.setBackground(new Color(245, 245, 245));
     contenedor.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-    // Encabezado
     JLabel encabezado = new JLabel("Total de ítems: " + items.size(), SwingConstants.CENTER);
     encabezado.setFont(new Font("Arial", Font.BOLD, 18));
     encabezado.setForeground(new Color(33, 150, 243));
     contenedor.add(encabezado);
     contenedor.add(Box.createRigidArea(new Dimension(0, 15)));
 
-    // Tarjetas de ítems
     for (RentItem item : items) {
         JPanel tarjeta = crearTarjetaMejorada(item);
         contenedor.add(tarjeta);
@@ -181,7 +179,6 @@ public class MenuGUI extends JFrame {
     scrollPane.getVerticalScrollBar().setUnitIncrement(16);
     dialogo.add(scrollPane, BorderLayout.CENTER);
 
-    // Panel inferior con botón salir
     JPanel panelBotonSalir = new JPanel();
     panelBotonSalir.setBackground(new Color(245, 245, 245));
     JButton btnSalir = BaseGUI.crearBoton("Salir", new Color(244, 67, 54));
@@ -195,61 +192,61 @@ public class MenuGUI extends JFrame {
     private JPanel crearTarjetaMejorada(RentItem item) {
         JPanel tarjeta = new JPanel(new BorderLayout(15, 15));
         tarjeta.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(220, 220, 220), 2),
+            BorderFactory.createLineBorder(new Color(178, 34, 34), 2), // borde rojo
             BorderFactory.createEmptyBorder(20, 20, 20, 20)
         ));
-        tarjeta.setBackground(Color.WHITE);
+        tarjeta.setBackground(new Color(255, 240, 240)); // fondo suave rojo
         tarjeta.setMaximumSize(new Dimension(900, 220));
-        
+
         if (item.getImagen() != null) {
             JLabel lblImagen = new JLabel();
             ImageIcon icon = item.getImagen();
             Image img = icon.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
             lblImagen.setIcon(new ImageIcon(img));
-            lblImagen.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+            lblImagen.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 1));
             tarjeta.add(lblImagen, BorderLayout.WEST);
         }
-        
+
         JPanel panelInfo = new JPanel();
         panelInfo.setLayout(new BoxLayout(panelInfo, BoxLayout.Y_AXIS));
-        panelInfo.setBackground(Color.WHITE);
-        
+        panelInfo.setBackground(new Color(255, 240, 240));
+
         JLabel lblNombre = new JLabel("" + item.getNombre());
         lblNombre.setFont(new Font("Arial", Font.BOLD, 20));
-        lblNombre.setForeground(new Color(33, 150, 243));
+        lblNombre.setForeground(new Color(178, 34, 34));
         panelInfo.add(lblNombre);
         panelInfo.add(Box.createRigidArea(new Dimension(0, 10)));
-        
+
         if (item instanceof Movie) {
             Movie movie = (Movie) item;
             JLabel lblEstado = new JLabel("Estado: " + movie.getEstado());
             lblEstado.setFont(new Font("Arial", Font.BOLD, 16));
-            lblEstado.setForeground(movie.getEstado().equals("ESTRENO") ? 
-                new Color(255, 87, 34) : new Color(76, 175, 80));
+            lblEstado.setForeground(new Color(220, 20, 60));
             panelInfo.add(lblEstado);
             panelInfo.add(Box.createRigidArea(new Dimension(0, 8)));
         }
-        
+
         JLabel lblPrecio = new JLabel("Precio de Renta: Lps. " + 
             String.format("%.2f", item.getPrecioRenta()));
         lblPrecio.setFont(new Font("Arial", Font.PLAIN, 15));
+        lblPrecio.setForeground(new Color(139, 0, 0));
         panelInfo.add(lblPrecio);
         panelInfo.add(Box.createRigidArea(new Dimension(0, 8)));
-        
+
         JLabel lblCodigo = new JLabel("Codigo: " + item.getCodigo());
         lblCodigo.setFont(new Font("Arial", Font.PLAIN, 14));
-        lblCodigo.setForeground(Color.GRAY);
+        lblCodigo.setForeground(new Color(139, 0, 0));
         panelInfo.add(lblCodigo);
         panelInfo.add(Box.createRigidArea(new Dimension(0, 8)));
-        
+
         String tipo = item instanceof Movie ? "Película" : "Videojuego";
         JLabel lblTipo = new JLabel("Tipo: " + tipo);
         lblTipo.setFont(new Font("Arial", Font.ITALIC, 14));
-        lblTipo.setForeground(new Color(100, 100, 100));
+        lblTipo.setForeground(new Color(178, 34, 34));
         panelInfo.add(lblTipo);
-        
+
         tarjeta.add(panelInfo, BorderLayout.CENTER);
-        
+
         return tarjeta;
     }
 
