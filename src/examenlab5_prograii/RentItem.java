@@ -27,14 +27,33 @@ public abstract class RentItem {
     
     public abstract double pagoRenta(int dias);
     
-    public int getCodigo(){return codigo;}
-    public String getNombre(){return nombre;}
-    public double getPrecioRenta(){return precioRenta;}
-    public int getCantidadCopias(){return cantidadCopias;}
-    public ImageIcon getImagen(){return imagen;}
+    public int getCodigo(){
+        return codigo;
+    }
     
-    public void setImagen(ImageIcon imagen){this.imagen = imagen;}
-    public void setCantidadCopias(int cantidad){this.cantidadCopias = cantidad;}
+    public String getNombre(){
+        return nombre;
+    }
+    
+    public double getPrecioRenta(){
+        return precioRenta;
+    }
+    
+    public int getCantidadCopias(){
+        return cantidadCopias;
+    }
+    
+    public ImageIcon getImagen(){
+        return imagen;
+    }
+    
+    public void setImagen(ImageIcon imagen){
+        this.imagen = imagen;
+    }
+    
+    public void setCantidadCopias(int cantidad){
+        this.cantidadCopias = cantidad;
+    }
     
     @Override
     public String toString(){
